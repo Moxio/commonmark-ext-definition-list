@@ -2,6 +2,8 @@
 namespace Moxio\CommonMark\Extension\DefinitionList;
 
 use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
 /**
@@ -22,5 +24,19 @@ class DefinitionList extends AbstractBlock
     public function matchesNextLine(Cursor $cursor): bool
     {
         return true;
+    }
+
+    public function finalize(ContextInterface $context, int $endLineNumber)
+    {
+        parent::finalize($context, $endLineNumber);
+
+        $lastItem = $this->lastChild;
+        $lastItemLastComponent = $lastItem->lastChild;
+        if ($lastItemLastComponent instanceof DefinitionListItemTerm) {
+            $replacementParagraph = new Paragraph();
+            $replacementParagraph->addLine($lastItemLastComponent->getStringContent());
+            $lastItem->detach();
+            $context->addBlock($replacementParagraph);
+        }
     }
 }
