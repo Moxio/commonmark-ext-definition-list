@@ -146,6 +146,35 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    // Example adapted from https://michelf.ca/projects/php-markdown/extra/#def-list
+    public function testSupportsMultipleParagraphsInDefinitions(): void
+    {
+        $markdown = <<<MD
+Term 1
+
+:   This is a definition with two paragraphs. Lorem ipsum
+    dolor sit amet, consectetuer adipiscing elit. Aliquam
+    hendrerit mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus.
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Term 1</dt>
+  <dd>
+    <p>This is a definition with two paragraphs. Lorem ipsum
+dolor sit amet, consectetuer adipiscing elit. Aliquam
+hendrerit mi posuere lectus.</p>
+    <p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+vitae, risus.</p>
+  </dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
     public function testSupportsMultipleDefinitionsForOneTerm(): void
     {

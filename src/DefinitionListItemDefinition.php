@@ -12,6 +12,8 @@ use League\CommonMark\Cursor;
  */
 class DefinitionListItemDefinition extends AbstractBlock
 {
+    private bool $containsBlankLines = false;
+
     public function canContain(AbstractBlock $block): bool
     {
         return !($block instanceof DefinitionListItemTerm || $block instanceof DefinitionListItemDefinition);
@@ -24,6 +26,18 @@ class DefinitionListItemDefinition extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor): bool
     {
-        return !$cursor->isBlank();
+        if ($this->containsBlankLines) {
+            if ($cursor->isIndented()) {
+                $cursor->advanceToNextNonSpaceOrTab();
+            } else {
+                return false;
+            }
+        }
+
+        if ($cursor->isBlank()) {
+            $this->containsBlankLines = true;
+        }
+
+        return true;
     }
 }
