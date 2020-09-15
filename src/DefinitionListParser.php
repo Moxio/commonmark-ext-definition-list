@@ -1,6 +1,7 @@
 <?php
 namespace Moxio\CommonMark\Extension\DefinitionList;
 
+use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\ContextInterface;
@@ -19,7 +20,23 @@ class DefinitionListParser implements BlockParserInterface
         }
 
         $originalContainer = $context->getContainer();
-        if ($originalContainer instanceof Paragraph) {
+        if ($originalContainer instanceof Document) {
+            $lastContainerChild = $originalContainer->lastChild();
+            if ($lastContainerChild !== null && $lastContainerChild instanceof Paragraph) {
+                // Turn the previous paragraph into definition term(s)
+                $definitionList = new DefinitionList();
+                $lastContainerChild->replaceWith($definitionList);
+                $this->switchContextToList($context, $definitionList);
+                $this->addTermsFromParagraph($context, $lastContainerChild);
+
+                $this->startDefinition($context, $cursor);
+
+                return true;
+            } else {
+                // There is no previous top-level paragraph that can contain the definition term(s).
+                return false;
+            }
+        } else if ($originalContainer instanceof Paragraph) {
             $originalContainerParent = $originalContainer->parent();
             if ($originalContainerParent instanceof DefinitionListItemDefinition) {
                 // This paragraph is part of a previous definition, so we shouldn't convert it into terms.
@@ -40,6 +57,13 @@ class DefinitionListParser implements BlockParserInterface
 
             return true;
         } else if ($originalContainer instanceof DefinitionList) {
+            $lastContainerChild = $originalContainer->lastChild();
+            if ($lastContainerChild !== null && $lastContainerChild instanceof Paragraph) {
+                // Remove the paragraph and turn it into terms within the definition list
+                $lastContainerChild->detach();
+                $this->addTermsFromParagraph($context, $lastContainerChild);
+            }
+
             $this->startDefinition($context, $cursor);
 
             return true;
