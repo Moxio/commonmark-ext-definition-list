@@ -14,7 +14,7 @@ class DefinitionListItemDefinition extends AbstractBlock
 {
     public function canContain(AbstractBlock $block): bool
     {
-        return !($block instanceof DefinitionListItem || $block instanceof DefinitionListItemTerm || $block instanceof DefinitionListItemDefinition);
+        return !($block instanceof DefinitionListItemTerm || $block instanceof DefinitionListItemDefinition);
     }
 
     public function isCode(): bool
@@ -24,6 +24,6 @@ class DefinitionListItemDefinition extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor): bool
     {
-        return true;
+        return !$cursor->isBlank();
     }
 }

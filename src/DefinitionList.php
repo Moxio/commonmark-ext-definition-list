@@ -14,7 +14,7 @@ class DefinitionList extends AbstractBlock
     public function canContain(AbstractBlock $block): bool
     {
         // Paragraphs are temporarily allowed, but removed when finalizing
-        return $block instanceof DefinitionListItem || $block instanceof Paragraph;
+        return $block instanceof DefinitionListItemTerm || $block instanceof DefinitionListItemDefinition || $block instanceof Paragraph;
     }
 
     public function isCode(): bool
@@ -31,7 +31,7 @@ class DefinitionList extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        while (!($this->lastChild instanceof DefinitionListItem)) {
+        while (!($this->lastChild instanceof DefinitionListItemTerm || $this->lastChild instanceof DefinitionListItemDefinition)) {
             $this->insertAfter($this->lastChild);
         }
     }

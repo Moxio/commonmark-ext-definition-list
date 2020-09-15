@@ -11,7 +11,6 @@ class DefinitionListExtension implements ExtensionInterface
         $environment
             ->addBlockParser(new DefinitionListParser())
             ->addBlockRenderer(DefinitionList::class, new DefinitionListRenderer())
-            ->addBlockRenderer(DefinitionListItem::class, new DefinitionListItemRenderer())
             ->addBlockRenderer(DefinitionListItemTerm::class, new DefinitionListItemTermRenderer())
             ->addBlockRenderer(DefinitionListItemDefinition::class, new DefinitionListItemDefinitionRenderer());
     }

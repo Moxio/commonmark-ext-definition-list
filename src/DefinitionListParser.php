@@ -16,26 +16,21 @@ class DefinitionListParser implements BlockParserInterface
 
         $originalContainer = $context->getContainer();
         if ($cursor->peek(0) !== ":") {
-            if ($originalContainer instanceof DefinitionListItemDefinition) {
-                $cursor->advanceToNextNonSpaceOrTab();
-                $originalContainer->addLine($cursor->getRemainder());
-                $cursor->advanceToEnd();
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
 
-        if (!($originalContainer instanceof Paragraph || $originalContainer instanceof DefinitionList || $originalContainer instanceof DefinitionListItem || $originalContainer instanceof DefinitionListItemDefinition)) {
+        if (!($originalContainer instanceof Paragraph || $originalContainer instanceof DefinitionList || $originalContainer instanceof DefinitionListItemDefinition)) {
             return false;
         }
 
         if ($originalContainer instanceof Paragraph && !($originalContainer->parent() instanceof DefinitionListItemDefinition)) {
-            if ($originalContainer->parent() instanceof DefinitionList) {
-                $context->replaceContainerBlock(new DefinitionListItem());
+            $originalContainerParent = $originalContainer->parent();
+            if ($originalContainerParent instanceof DefinitionList) {
+                $originalContainer->detach();
+                $context->setContainer($originalContainerParent);
+                $context->setTip($originalContainerParent);
             } else {
                 $context->replaceContainerBlock(new DefinitionList());
-                $context->addBlock(new DefinitionListItem());
             }
 
             $strings = $originalContainer->getStrings();
