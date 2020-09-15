@@ -31,14 +31,8 @@ class DefinitionList extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $removedChildren = [];
         while (!($this->lastChild instanceof DefinitionListItem)) {
-            $removedChildren[] = $this->lastChild;
-            $this->lastChild->detach();
-        }
-
-        foreach ($removedChildren as $removedChild) {
-            $this->parent->appendChild($removedChild);
+            $this->insertAfter($this->lastChild);
         }
     }
 }

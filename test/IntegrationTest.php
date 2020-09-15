@@ -199,6 +199,36 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+
+    public function testSupportsMultipleParagraphsAfterTheDefinitionList(): void
+    {
+        $markdown = <<<MD
+Apple
+: Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
+
+Orange
+: The fruit of an evergreen tree of the genus Citrus.
+
+Concluding paragraph
+split over multiple lines.
+
+Another concluding paragraph.
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Apple</dt>
+  <dd>Pomaceous fruit of plants of the genus Malus in the family Rosaceae.</dd>
+  <dt>Orange</dt>
+  <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+<p>Concluding paragraph
+split over multiple lines.</p>
+<p>Another concluding paragraph.</p>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     public function assertMarkdownIsConvertedTo($expectedHtml, $markdown): void
     {
         $environment = Environment::createCommonMarkEnvironment();
