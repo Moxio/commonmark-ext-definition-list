@@ -101,6 +101,22 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    public function testSupportsInlineMarkupInTermAndDefinition(): void
+    {
+        $markdown = <<<MD
+`strpos`
+:   Find the position of the first occurrence of a _substring_ in a string
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt><code>strpos</code></dt>
+  <dd>Find the position of the first occurrence of a <em>substring</em> in a string</dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
     public function testSupportsMultipleDefinitionsForOneTerm(): void
     {
