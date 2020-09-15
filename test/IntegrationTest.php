@@ -152,22 +152,25 @@ HTML;
         $markdown = <<<MD
 Term 1
 
-:   This is a definition with two paragraphs. Lorem ipsum
+:   This is a definition with three paragraphs. Lorem ipsum
     dolor sit amet, consectetuer adipiscing elit. Aliquam
     hendrerit mi posuere lectus.
 
     Vestibulum enim wisi, viverra nec, fringilla in, laoreet
     vitae, risus.
+
+    This is even a third pararaph.
 MD;
         $expectedHtml = <<<HTML
 <dl>
   <dt>Term 1</dt>
   <dd>
-    <p>This is a definition with two paragraphs. Lorem ipsum
+    <p>This is a definition with three paragraphs. Lorem ipsum
 dolor sit amet, consectetuer adipiscing elit. Aliquam
 hendrerit mi posuere lectus.</p>
     <p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet
 vitae, risus.</p>
+    <p>This is even a third pararaph.</p>
   </dd>
 </dl>
 HTML;

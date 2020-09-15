@@ -26,16 +26,18 @@ class DefinitionListItemDefinition extends AbstractBlock
 
     public function matchesNextLine(Cursor $cursor): bool
     {
+        if ($cursor->isBlank()) {
+            $this->containsBlankLines = true;
+
+            return true;
+        }
+
         if ($this->containsBlankLines) {
             if ($cursor->isIndented()) {
                 $cursor->advanceToNextNonSpaceOrTab();
             } else {
                 return false;
             }
-        }
-
-        if ($cursor->isBlank()) {
-            $this->containsBlankLines = true;
         }
 
         return true;
