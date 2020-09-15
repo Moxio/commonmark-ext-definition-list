@@ -39,7 +39,9 @@ class DefinitionListParser implements BlockParserInterface
             }
 
             $strings = $originalContainer->getStrings();
-            $context->addBlock(new DefinitionListItemTerm($strings));
+            foreach ($strings as $string) {
+                $context->addBlock(new DefinitionListItemTerm([ $string ]));
+            }
         }
 
         $cursor->advanceBy(1);

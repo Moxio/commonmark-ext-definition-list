@@ -127,6 +127,30 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
+    public function testSupportsMultipleTermsForOneDefinition(): void
+    {
+        $markdown = <<<MD
+Term 1
+Term 2
+:   Definition a
+
+Term 3
+:   Definition b
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Term 1</dt>
+  <dt>Term 2</dt>
+  <dd>Definition a</dd>
+  <dt>Term 3</dt>
+  <dd>Definition b</dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     public function testSupportsParagraphsBeforeTheDefinitionList(): void
     {
         $markdown = <<<MD
