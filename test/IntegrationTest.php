@@ -7,11 +7,9 @@ use League\CommonMark\HtmlRenderer;
 use Moxio\CommonMark\Extension\DefinitionList\DefinitionListExtension;
 use PHPUnit\Framework\TestCase;
 
-class IntegrationTest extends TestCase
-{
+class IntegrationTest extends TestCase {
     // Example based on https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testParsesAndRendersSimpleDefinitionList(): void
-    {
+    public function testParsesAndRendersSimpleDefinitionList(): void {
         $markdown = <<<MD
 Apple
 : Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
@@ -32,8 +30,7 @@ HTML;
     }
 
     // Example based on https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsArbitraryIndentsAfterTheColon(): void
-    {
+    public function testSupportsArbitraryIndentsAfterTheColon(): void {
         $markdown = <<<MD
 Apple
 :   Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
@@ -54,8 +51,7 @@ HTML;
     }
 
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsMultilineDefinitionsWithIndentation(): void
-    {
+    public function testSupportsMultilineDefinitionsWithIndentation(): void {
         $markdown = <<<MD
 Apple
 :   Pomaceous fruit of plants of the genus Malus in
@@ -78,8 +74,7 @@ HTML;
     }
 
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsMultilineDefinitionsWithoutIndentation(): void
-    {
+    public function testSupportsMultilineDefinitionsWithoutIndentation(): void {
         $markdown = <<<MD
 Apple
 :   Pomaceous fruit of plants of the genus Malus in
@@ -101,8 +96,7 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
-    public function testSupportsInlineMarkupInTermAndDefinition(): void
-    {
+    public function testSupportsInlineMarkupInTermAndDefinition(): void {
         $markdown = <<<MD
 `strpos`
 :   Find the position of the first occurrence of a _substring_ in a string
@@ -117,8 +111,7 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
-    public function testSupportsLooseDefinitions(): void
-    {
+    public function testSupportsLooseDefinitions(): void {
         $markdown = <<<MD
 Apple
 
@@ -147,8 +140,7 @@ HTML;
     }
 
     // Example adapted from https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsMultipleParagraphsInDefinitions(): void
-    {
+    public function testSupportsMultipleParagraphsInDefinitions(): void {
         $markdown = <<<MD
 Term 1
 
@@ -171,6 +163,44 @@ hendrerit mi posuere lectus.</p>
     <p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet
 vitae, risus.</p>
     <p>This is even a third pararaph.</p>
+  </dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
+    // Example adapted from https://michelf.ca/projects/php-markdown/extra/#def-list
+    public function testSupportsOtherBlockLevelElementsInDefinitions(): void
+    {
+        $markdown = <<<MD
+Term 2
+
+:   This definition has a code block, a blockquote and a list.
+
+        code block.
+
+    > block quote
+    > on two lines.
+
+    1.  first list item
+    2.  second list item
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Term 2</dt>
+  <dd>
+    <p>This definition has a code block, a blockquote and a list.</p>
+    <pre><code>code block.
+</code></pre>
+    <blockquote>
+      <p>block quote
+on two lines.</p>
+    </blockquote>
+    <ol>
+      <li>first list item</li>
+      <li>second list item</li>
+    </ol>
   </dd>
 </dl>
 HTML;

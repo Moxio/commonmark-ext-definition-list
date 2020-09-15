@@ -34,7 +34,7 @@ class DefinitionListItemDefinition extends AbstractBlock
 
         if ($this->containsBlankLines) {
             if ($cursor->isIndented()) {
-                $cursor->advanceToNextNonSpaceOrTab();
+                $cursor->advanceBy(Cursor::INDENT_LEVEL, true);
             } else {
                 return false;
             }
