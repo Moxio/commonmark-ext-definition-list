@@ -1,0 +1,30 @@
+{
+	"name": "moxio/commonmark-ext-definition-list",
+	"type": "commonmark-extension",
+	"description": "Extension for league/commonmark to support definition lists",
+	"license": "MIT",
+	"keywords" : [ "markdown", "commonmark", "extension", "definition-list" ],
+	"authors": [
+		{
+			"name": "Moxio",
+			"homepage": "https://www.moxio.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Moxio\\CommonMark\\Extension\\DefinitionList\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Moxio\\CommonMark\\Extension\\DefinitionList\\Test\\": "test/"
+		}
+	},
+	"require": {
+		"php": "^7.4 || ^8.0",
+		"league/commonmark": "^1.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.1"
+	}
+}
