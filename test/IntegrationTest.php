@@ -64,6 +64,6 @@ HTML;
         $renderer = new HtmlRenderer($environment);
         $actualOutput = $renderer->renderBlock($parser->parse($markdown));
 
-        $this->assertXmlStringEqualsXmlString($expectedHtml, $actualOutput);
+        $this->assertXmlStringEqualsXmlString("<html>$expectedHtml</html>", "<html>$actualOutput</html>");
     }
 }
