@@ -54,7 +54,7 @@ HTML;
     }
 
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsMultilineDefintionsWithIndentation(): void
+    public function testSupportsMultilineDefinitionsWithIndentation(): void
     {
         $markdown = <<<MD
 Apple
@@ -78,7 +78,7 @@ HTML;
     }
 
     // Example from https://michelf.ca/projects/php-markdown/extra/#def-list
-    public function testSupportsMultilineDefintionsWithoutIndentation(): void
+    public function testSupportsMultilineDefinitionsWithoutIndentation(): void
     {
         $markdown = <<<MD
 Apple
