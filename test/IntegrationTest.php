@@ -229,6 +229,32 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    public function testSupportsOtherBlockAfterDefinitionList(): void
+    {
+        $markdown = <<<MD
+Apple
+: Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
+
+Orange
+: The fruit of an evergreen tree of the genus Citrus.
+
+> Quote about apples and oranges
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Apple</dt>
+  <dd>Pomaceous fruit of plants of the genus Malus in the family Rosaceae.</dd>
+  <dt>Orange</dt>
+  <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+<blockquote>
+  <p>Quote about apples and oranges</p>
+</blockquote>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     public function assertMarkdownIsConvertedTo($expectedHtml, $markdown): void
     {
         $environment = Environment::createCommonMarkEnvironment();
