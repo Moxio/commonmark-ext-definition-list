@@ -14,10 +14,16 @@ class DefinitionListParser implements BlockParserInterface
             return false;
         }
 
-        if ($cursor->peek(0) . $cursor->peek(1) !== ": ") {
-            if ($context->getContainer() instanceof DefinitionList) {
+        $originalContainer = $context->getContainer();
+        if ($cursor->peek(0) !== ":") {
+            if ($originalContainer instanceof DefinitionList) {
                 $context->addBlock(new DefinitionListItem());
-                $context->addBlock(new DefinitionListItemTerm([ $cursor->getRemainder() ]));
+                $context->addBlock(new DefinitionListItemTerm([$cursor->getRemainder()]));
+                $cursor->advanceToEnd();
+                return true;
+            } else if ($originalContainer instanceof DefinitionListItemDefinition) {
+                $cursor->advanceToNextNonSpaceOrTab();
+                $originalContainer->addLine($cursor->getRemainder());
                 $cursor->advanceToEnd();
                 return true;
             } else {
@@ -25,8 +31,7 @@ class DefinitionListParser implements BlockParserInterface
             }
         }
 
-        $originalContainer = $context->getContainer();
-        if (!($originalContainer instanceof Paragraph || $originalContainer instanceof DefinitionList || $originalContainer instanceof DefinitionListItem)) {
+        if (!($originalContainer instanceof Paragraph || $originalContainer instanceof DefinitionList || $originalContainer instanceof DefinitionListItem || $originalContainer instanceof DefinitionListItemDefinition)) {
             return false;
         }
 
@@ -39,7 +44,8 @@ class DefinitionListParser implements BlockParserInterface
             $context->addBlock(new DefinitionListItemTerm($strings));
         }
 
-        $cursor->advanceBy(2);
+        $cursor->advanceBy(1);
+        $cursor->advanceToNextNonSpaceOrTab();
         $context->addBlock(new DefinitionListItemDefinition([ $cursor->getRemainder() ]));
         $cursor->advanceToEnd();
 

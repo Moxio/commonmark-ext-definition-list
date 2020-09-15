@@ -37,7 +37,15 @@ class DefinitionListItemDefinition extends AbstractStringContainerBlock implemen
 
     public function matchesNextLine(Cursor $cursor): bool
     {
-        return false;
+        if ($cursor->isBlank()) {
+            return false;
+        }
+
+        if ($cursor->peek() === ":") {
+            return false;
+        }
+
+        return true;
     }
 
     public function handleRemainingContents(ContextInterface $context, Cursor $cursor)
