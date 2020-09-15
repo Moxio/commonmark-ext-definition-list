@@ -13,7 +13,8 @@ class DefinitionList extends AbstractBlock
 {
     public function canContain(AbstractBlock $block): bool
     {
-        return $block instanceof DefinitionListItem;
+        // Paragraphs are temporarily allowed, but removed when finalizing
+        return $block instanceof DefinitionListItem || $block instanceof Paragraph;
     }
 
     public function isCode(): bool
@@ -30,13 +31,14 @@ class DefinitionList extends AbstractBlock
     {
         parent::finalize($context, $endLineNumber);
 
-        $lastItem = $this->lastChild;
-        $lastItemLastComponent = $lastItem->lastChild;
-        if ($lastItemLastComponent instanceof DefinitionListItemTerm) {
-            $replacementParagraph = new Paragraph();
-            $replacementParagraph->addLine($lastItemLastComponent->getStringContent());
-            $lastItem->detach();
-            $context->addBlock($replacementParagraph);
+        $removedChildren = [];
+        while (!($this->lastChild instanceof DefinitionListItem)) {
+            $removedChildren[] = $this->lastChild;
+            $this->lastChild->detach();
+        }
+
+        foreach ($removedChildren as $removedChild) {
+            $this->parent->appendChild($removedChild);
         }
     }
 }
