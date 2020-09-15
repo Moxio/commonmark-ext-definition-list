@@ -29,6 +29,10 @@ class DefinitionListParser implements BlockParserInterface
                 $this->switchContextToList($context, $definitionList);
                 $this->addTermsFromParagraph($context, $lastContainerChild);
 
+                // Because the paragraph was finished, there was a blank line before the definition,
+                // which means the definition list must be loose.
+                $definitionList->markAsLoose();
+
                 $this->startDefinition($context, $cursor);
 
                 return true;
@@ -62,6 +66,10 @@ class DefinitionListParser implements BlockParserInterface
                 // Remove the paragraph and turn it into terms within the definition list
                 $lastContainerChild->detach();
                 $this->addTermsFromParagraph($context, $lastContainerChild);
+
+                // Because the paragraph was finished, there was a blank line before the definition,
+                // which means the definition list must be loose.
+                $originalContainer->markAsLoose();
             }
 
             $this->startDefinition($context, $cursor);

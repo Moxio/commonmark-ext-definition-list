@@ -11,6 +11,9 @@ use League\CommonMark\Cursor;
  */
 class DefinitionList extends AbstractBlock
 {
+    // Tight by default, until proven loose
+    private bool $isTight = true;
+
     public function canContain(AbstractBlock $block): bool
     {
         // Paragraphs are temporarily allowed, but removed when finalizing
@@ -25,6 +28,16 @@ class DefinitionList extends AbstractBlock
     public function matchesNextLine(Cursor $cursor): bool
     {
         return true;
+    }
+
+    public function markAsLoose(): void
+    {
+        $this->isTight = false;
+    }
+
+    public function isTight(): bool
+    {
+        return $this->isTight;
     }
 
     public function finalize(ContextInterface $context, int $endLineNumber)

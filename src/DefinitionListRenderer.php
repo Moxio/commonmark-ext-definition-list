@@ -14,6 +14,6 @@ class DefinitionListRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        return new HtmlElement('dl', [], $htmlRenderer->renderBlocks($block->children(), true));
+        return new HtmlElement('dl', [], $htmlRenderer->renderBlocks($block->children(), $block->isTight()));
     }
 }

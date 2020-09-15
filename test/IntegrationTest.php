@@ -132,10 +132,14 @@ MD;
         $expectedHtml = <<<HTML
 <dl>
   <dt>Apple</dt>
-  <dd>Pomaceous fruit of plants of the genus Malus in
-the family Rosaceae.</dd>
+  <dd>
+    <p>Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</p>
+  </dd>
   <dt>Orange</dt>
-  <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+  <dd>
+    <p>The fruit of an evergreen tree of the genus Citrus.</p>
+  </dd>
 </dl>
 HTML;
 
