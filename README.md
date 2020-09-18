@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Moxio/commonmark-ext-definition-list.svg?branch=master)](https://travis-ci.org/Moxio/commonmark-ext-definition-list)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/Moxio/commonmark-ext-definition-list)
 
 moxio/commonmark-ext-definition-list
