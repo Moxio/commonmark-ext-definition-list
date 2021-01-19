@@ -436,6 +436,30 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    // Example from https://pandoc.org/MANUAL.html#definition-lists
+    public function testSupportsTildeAsListMarker(): void
+    {
+        $markdown = <<<MD
+Term 1
+  ~ Definition 1
+
+Term 2
+  ~ Definition 2a
+  ~ Definition 2b
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Term 1</dt>
+  <dd>Definition 1</dd>
+  <dt>Term 2</dt>
+  <dd>Definition 2a</dd>
+  <dd>Definition 2b</dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     public function assertMarkdownIsConvertedTo($expectedHtml, $markdown): void
     {
         $environment = Environment::createCommonMarkEnvironment();

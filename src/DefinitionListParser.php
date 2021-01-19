@@ -15,7 +15,7 @@ class DefinitionListParser implements BlockParserInterface
             return false;
         }
 
-        if ($cursor->getNextNonSpacePosition() > 2 || $cursor->getNextNonSpaceCharacter() !== ":") {
+        if ($cursor->getNextNonSpacePosition() > 2 || !in_array($cursor->getNextNonSpaceCharacter(), [":", "~"], true)) {
             return false;
         }
 

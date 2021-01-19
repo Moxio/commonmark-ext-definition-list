@@ -59,7 +59,7 @@ Since there are subtle differences between the syntaxes understood by these
 libraries and there is no formally defined standard, 100% compatibility
 with any of the aforementioned libraries cannot be guaranteed. The use
 of the tilde (`~`) as a definition list marker (as understood by Pandoc)
-is not supported yet.
+is also supported.
 
 A simple example:
 ```markdown
