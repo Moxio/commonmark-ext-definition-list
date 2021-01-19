@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Moxio/commonmark-ext-definition-list.svg?branch=master)](https://travis-ci.org/Moxio/commonmark-ext-definition-list)
+![Continuous Integration](https://github.com/Moxio/commonmark-ext-definition-list/workflows/Continuous%20Integration/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/moxio/commonmark-ext-definition-list/v/stable)](https://packagist.org/packages/moxio/commonmark-ext-definition-list)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/Moxio/commonmark-ext-definition-list)
 
