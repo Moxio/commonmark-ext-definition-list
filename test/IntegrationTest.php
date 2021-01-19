@@ -31,6 +31,46 @@ HTML;
         $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
     }
 
+    public function testSupportsUpToTwoSpacesBeforeTheColon(): void
+    {
+        $markdown = <<<MD
+Apple
+  : Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
+
+Orange
+  : The fruit of an evergreen tree of the genus Citrus.
+MD;
+        $expectedHtml = <<<HTML
+<dl>
+  <dt>Apple</dt>
+  <dd>Pomaceous fruit of plants of the genus Malus in the family Rosaceae.</dd>
+  <dt>Orange</dt>
+  <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
+    public function testDoesNotAllowThreeOrMoreSpacesBeforeTheColon(): void
+    {
+        $markdown = <<<MD
+Apple
+   : Pomaceous fruit of plants of the genus Malus in the family Rosaceae.
+
+Orange
+   : The fruit of an evergreen tree of the genus Citrus.
+MD;
+        $expectedHtml = <<<HTML
+<p>Apple
+: Pomaceous fruit of plants of the genus Malus in the family Rosaceae.</p>
+<p>Orange
+: The fruit of an evergreen tree of the genus Citrus.</p>
+HTML;
+
+        $this->assertMarkdownIsConvertedTo($expectedHtml, $markdown);
+    }
+
     // Example based on https://michelf.ca/projects/php-markdown/extra/#def-list
     public function testSupportsArbitraryIndentsAfterTheColon(): void
     {

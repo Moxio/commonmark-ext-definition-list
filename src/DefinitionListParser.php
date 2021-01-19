@@ -15,7 +15,7 @@ class DefinitionListParser implements BlockParserInterface
             return false;
         }
 
-        if ($cursor->peek(0) !== ":") {
+        if ($cursor->getNextNonSpacePosition() > 2 || $cursor->getNextNonSpaceCharacter() !== ":") {
             return false;
         }
 
@@ -99,6 +99,7 @@ class DefinitionListParser implements BlockParserInterface
 
     private function startDefinition(ContextInterface $context, Cursor $cursor): void
     {
+        $cursor->advanceToNextNonSpaceOrTab();
         $cursor->advanceBy(1);
         $cursor->advanceToNextNonSpaceOrTab();
 
