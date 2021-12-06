@@ -14,6 +14,8 @@ class DefinitionListItemTermRenderer implements BlockRendererInterface
             throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
         }
 
-        return new HtmlElement('dt', [], $htmlRenderer->renderInlines($block->children()));
+        $attrs = $block->getData('attributes', []);
+
+        return new HtmlElement('dt', $attrs, $htmlRenderer->renderInlines($block->children()));
     }
 }
