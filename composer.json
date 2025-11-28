@@ -26,5 +26,13 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.3"
+	},
+	"config": {
+		"audit": {
+			"ignore": {
+				"CVE-2025-46734": "The attributes extension is not used.",
+				"GHSA-c2pc-g5qf-rfrf": "Within the scope of this library no user input is accepted."
+			}
+		}
 	}
 }
